@@ -8,9 +8,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Module dependencies.
  */
 var app_1 = __importDefault(require("./app"));
-var https_1 = __importDefault(require("https"));
+var http_1 = __importDefault(require("http"));
 var fs_1 = __importDefault(require("fs"));
 // var debug = require('debug')('technica:server');
+var enforce = require('express-sslify');
 var key = fs_1.default.readFileSync('server-key.pem'), cert = fs_1.default.readFileSync('server-crt.pem'), options = {
     key: key,
     cert: cert,
@@ -25,7 +26,9 @@ app_1.default.app.set('ip', ip);
 /**
  * Create HTTPS server.
  */
-var server = https_1.default.createServer(options, app_1.default.app);
+// for https
+app_1.default.app.use(enforce.HTTPS({ trustProtoHeader: true }));
+var server = http_1.default.createServer(app_1.default.app);
 /**
  * Listen on provided port, on all network interfaces.
  */
