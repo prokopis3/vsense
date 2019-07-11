@@ -2,17 +2,10 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_useragent_1 = __importDefault(require("express-useragent"));
 var util_1 = require("util");
-var bCrypt = __importStar(require("bCrypt"));
+/* import * as bCrypt from 'bCrypt' */
 var GBRoutines = /** @class */ (function () {
     function GBRoutines() {
     }
@@ -62,11 +55,11 @@ var GBRoutines = /** @class */ (function () {
     /* -------------------------- passport Strategy -------------------------- */
     // Compares hashed passwords using bCrypt
     GBRoutines.prototype.isValidPassword = function (user, password) {
-        return bCrypt.compareSync(password, user.password);
+        return ''; /* bCrypt.compareSync(password, user.password) */
     };
     // Generates hash using bCrypt
     GBRoutines.prototype.createHash = function (password) {
-        return bCrypt.hashSync(password, bCrypt.genSaltSync(10));
+        return ''; /* bCrypt.hashSync(password, bCrypt.genSaltSync(10)) */
     };
     GBRoutines.prototype.Variablevalid = function (s) {
         return s && (util_1.isString(s) || util_1.isArray(s)) && s.length > 0 ? s : null;
