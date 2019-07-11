@@ -24,7 +24,7 @@ var Server = /** @class */ (function () {
     // CONSTRUCTOR CLASS
     function Server() {
         // SERVER LISTEN PORTS
-        this.PORT = 3000;
+        this.PORT = 8080;
         //create classes routes, routines
         this.gbObject = new global_1.GBRoutines();
         this.routeObject = new routes_1.mainRouter();

@@ -25,7 +25,7 @@ var enforce = require('express-sslify');
 /**
  * Get port from environment and store in Express.
  */
-var port = normalizePort(app_1.default.PORT.toString() || '3000'), ip = app_1.default.IP.toString();
+var port = normalizePort(app_1.default.PORT.toString()), ip = app_1.default.IP.toString();
 app_1.default.app.set('port', port);
 app_1.default.app.set('ip', ip);
 /**
