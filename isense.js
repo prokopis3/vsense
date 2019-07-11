@@ -9,13 +9,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var app_1 = __importDefault(require("./app"));
 var http_1 = __importDefault(require("http"));
-var fs_1 = __importDefault(require("fs"));
 // var debug = require('debug')('technica:server');
 var enforce = require('express-sslify');
-var key = fs_1.default.readFileSync('server-key.pem'), cert = fs_1.default.readFileSync('server-crt.pem'), options = {
+/* var key = fs.readFileSync('server-key.pem')
+, cert = fs.readFileSync('server-crt.pem')
+, options = {
     key: key,
-    cert: cert,
-};
+    cert: cert, */
+/*  ca: fsx.readFileSync('ca-crt.pem'),
+    crl: fsx.readFileSync('ca-crl.pem'),
+    requestCert: true,
+    rejectUnauthorized: true
+} */
 // http.globalAgent.maxSockets = 100;
 /**
  * Get port from environment and store in Express.
