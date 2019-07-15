@@ -45,8 +45,8 @@ var Server = /** @class */ (function () {
             ephemeral: true
         };
         // this.PORT = 'production' == this.env ? process.env.OPENSHIFT_NODEJS_PORT || this.PORT : this.PORT
-        this.PORT = process.env.OPENSHIFT_NODEJS_PORT || this.PORT;
-        this.IP = process.env.OPENSHIFT_NODEJS_IP || 'localhost';
+        this.PORT = process.env.PORT || this.PORT;
+        this.IP = process.env.IP || 'localhost';
         this.mainServe();
     }
     // USE SOCKET IO
