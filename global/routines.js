@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_useragent_1 = __importDefault(require("express-useragent"));
 var util_1 = require("util");
-var bcrypt_1 = require("bcrypt");
+/* import { compareSync, hashSync, genSaltSync } from 'bcrypt' */
 var GBRoutines = /** @class */ (function () {
     function GBRoutines() {
     }
@@ -55,11 +55,11 @@ var GBRoutines = /** @class */ (function () {
     /* -------------------------- passport Strategy -------------------------- */
     // Compares hashed passwords using bCrypt
     GBRoutines.prototype.isValidPassword = function (user, password) {
-        return bcrypt_1.compareSync(password, user.password);
+        return /* compareSync(password, user.password) */ '';
     };
     // Generates hash using bCrypt
     GBRoutines.prototype.createHash = function (password) {
-        return bcrypt_1.hashSync(password, bcrypt_1.genSaltSync(10));
+        return /* hashSync(password, genSaltSync(10)) */ '';
     };
     GBRoutines.prototype.Variablevalid = function (s) {
         return s && (util_1.isString(s) || util_1.isArray(s)) && s.length > 0 ? s : null;
