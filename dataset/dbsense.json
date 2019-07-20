@@ -1,0 +1,8 @@
+{
+	"name": "dbsense",
+	"properties": {
+		"description": "mULab",
+		"annotations": [],
+		"type": "DocumentDbCollection"
+	}
+}
