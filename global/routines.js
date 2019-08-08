@@ -8,8 +8,24 @@ var util_1 = require("util");
 /* import { compareSync, hashSync, genSaltSync } from 'bcrypt' */
 var GBRoutines = /** @class */ (function () {
     function GBRoutines() {
+        // private version: string
+        var _this = this;
+        this.getNestedChildren = function (arr, parent) {
+            var out = [];
+            var str;
+            for (var i in arr) {
+                str = arr[i].parent_id ? arr[i].parent_id : undefined;
+                /* console.log( 'parent_id: ' + str  + `  ` + parent) */
+                if (!str && str == parent || str && str.toString() == parent) {
+                    var children = _this.getNestedChildren(arr, arr[i]._id);
+                    if (children.length > 0)
+                        arr[i].children = children;
+                    out.push(arr[i]);
+                }
+            }
+            return out;
+        };
     }
-    // private version: string
     // constructor(version: string) {
     //     this.version = version
     // }
@@ -63,6 +79,9 @@ var GBRoutines = /** @class */ (function () {
     };
     GBRoutines.prototype.Variablevalid = function (s) {
         return s && (util_1.isString(s) || util_1.isArray(s)) && s.length > 0 ? s : null;
+    };
+    GBRoutines.prototype.escapeRegex = function (text) {
+        return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
     };
     return GBRoutines;
 }());

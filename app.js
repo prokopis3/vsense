@@ -19,7 +19,10 @@ var body_parser_1 = __importDefault(require("body-parser"));
 var passport_1 = __importDefault(require("passport"));
 var express_session_1 = __importDefault(require("express-session"));
 // , flash    = require('connect-flash')
-// , HOST = 'localhost' //prokopis.hopto.org
+// , HOST = 'localhost' // prokopis.hopto.org
+/*
+    Server Node Isense Application
+*/
 var Server = /** @class */ (function () {
     // CONSTRUCTOR CLASS
     function Server() {
@@ -56,12 +59,13 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.mainServe = function () {
         // View Engine
+        console.log(__dirname);
         this.app.use(serve_favicon_1.default(path_1.default.join(__dirname + '/favicon.ico')));
-        // Set Static Folder dist production
-        this.app.use(express_1.default.static(path_1.default.join(__dirname + '/dist')));
+        // Set Static Folder .well-known production
+        // this.app.use(express.static(fpath.join(__dirname, '../','.well-known')))
         this.app.set('views', express_1.default.static(path_1.default.join(__dirname + '/views')));
         // this.app.use('/scripts', express.static(fpath.join(__dirname + '/public/node_modules')))
-        // this.app.set('view engine', 'ejs')
+        this.app.set('view engine', 'html');
         // app.engine('html', require('ejs').renderFile)
         // cookieParser
         this.app.use(cookie_parser_1.default());
@@ -87,13 +91,13 @@ var Server = /** @class */ (function () {
                 next();
             }
         });
-        /* this.app.all('*',  (req:Request, res:Response, next: NextFunction) => {
+        /* this.app.use( (req:Request, res:Response, next: NextFunction) => { // app.all('*')
 
             var schema = (req.headers['x-forwarded-proto'] || 'none');
             
             if ( req.hostname != 'localhost' && schema != 'https' ) {
         
-                res.set('x-forwarded-proto', 'https');
+                // res.set('x-forwarded-proto', 'https');
                 // res.redirect('https://' + req.get('host') + req.url);
         
             } else {
@@ -109,11 +113,10 @@ var Server = /** @class */ (function () {
         
             // Cookies that have been signed
             console.log('Signed Cookies: ', req.signedCookies)
-            console.log('session Cookies: ', req.session)
+            // console.log('session Cookies: ', req.session)
         
             
-        })
- */
+        }) */
         // USE ROUTES
         this.app.use('/', this.routeObject.router);
         this.app.use('/task', this.taskObject.router);
@@ -144,5 +147,4 @@ var Server = /** @class */ (function () {
     };
     return Server;
 }());
-// this.app.listen(PORT, () => console.log('Server Running on %s:%s'/* , HOST */, PORT));
 exports.default = new Server();

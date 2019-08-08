@@ -1,5 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/*
+In the node.js intro tutorial (http://nodejs.org/), they show a basic tcp
+server, but for some reason omit a client connecting to it.  I added an
+example at the bottom.
+Save the following server in example.js:
+*/
+// var sys = require('sys')
+var net = require("net");
 var _1 = require(".");
 var gps = require('gps-tracking');
 var TcpSocketServer = /** @class */ (function () {
@@ -10,6 +18,7 @@ var TcpSocketServer = /** @class */ (function () {
         this.sockets = [];
         this.gpsOptions = {
             'debug': false,
+            //'host'                  : 'isense.westeurope.cloudapp.azure.com',// '40.115.55.149',
             'port': 8081,
             'device_adapter': "TK103"
         };
@@ -40,6 +49,32 @@ var TcpSocketServer = /** @class */ (function () {
                 //echo raw data package
                 console.log(data.toString());
             });
+        });
+    };
+    TcpSocketServer.prototype.TcpClientTK103 = function () {
+        var client = new net.Socket(), HOST = this.gpsOptions.host, PORT = this.gpsOptions.port;
+        client.connect(PORT, HOST, function () {
+            console.log('Client connected to: ' + HOST + ':' + PORT);
+            // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client 
+            client.write('(009205906401BP05000009205906401190629A2321.5726N08518.8931E000.01027100.000001000000L076864EE)');
+        });
+        client.on('data', function (data) {
+            console.log('Client received: ' + data);
+            var ival = 10000;
+            setInterval(function () {
+                console.log("Client writing interval: " + ival + data);
+                client.write('(009205906401BR00190629A2321.5729N08518.8934E000.01033420.000001000007L076864EE)');
+            }, ival);
+            if (data.toString().endsWith('exit')) {
+                client.destroy();
+            }
+        });
+        // Add a 'close' event handler for the client socket
+        client.on('close', function () {
+            console.log('Client closed');
+        });
+        client.on('error', function (err) {
+            console.error(err);
         });
     };
     TcpSocketServer.prototype.TcpServertk102 = function () {
@@ -126,5 +161,5 @@ var TcpSocketServer = /** @class */ (function () {
     return TcpSocketServer;
 }());
 var tcpsock = new TcpSocketServer();
-tcpsock.TcpGpsTrack();
+// tcpsock.TcpGpsTrack()
 exports.default = tcpsock;
