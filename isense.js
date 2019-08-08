@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Module dependencies.
  */
 var app_1 = __importDefault(require("./app"));
-var https_1 = __importDefault(require("https"));
+var https_1 = __importDefault(require("http"));
 var fs_1 = __importDefault(require("fs"));
 // var debug = require('debug')('technica:server');
 var enforce = require('express-sslify') //, key = fs_1.default.readFileSync('server-key.pem'), cert = fs_1.default.readFileSync('server-crt.pem')
