@@ -4,7 +4,7 @@
   "description": "",
   "main": "isense.js",
   "scripts": {
-    "start": "node isense.js"
+    "start": "node bin/www_NoSSL.js"
   },
   "author": "",
   "license": "ISC",

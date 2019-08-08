@@ -8,23 +8,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Module dependencies.
  */
 var app_1 = __importDefault(require("../app"));
-var http_1 = __importDefault(require("http"));
+var https_1 = __importDefault(require("https"));
+var fs_1 = __importDefault(require("fs"));
 // var debug = require('debug')('technica:server');
-var enforce = require('express-sslify');
-// , key = fs.readFileSync('server-key.pem')
-// , cert = fs.readFileSync('server-crt.pem')
+var enforce = require('express-sslify'), key = fs_1.default.readFileSync('server-key.pem'), cert = fs_1.default.readFileSync('server-crt.pem')
 // , pfx = fs.readFileSync('smartdeep.io.pfx')
-/* , options = {
-  key: key,
-  cert: cert, */
-/*   pfx,
-   passphrase: 'For(Life#0)'
- 
-   ca: fsx.readFileSync('ca-crt.pem'),
-   crl: fsx.readFileSync('ca-crl.pem'),
-   requestCert: true,
-   rejectUnauthorized: true
-}*/
+, options = {
+    key: key,
+    cert: cert,
+};
 // http.globalAgent.maxSockets = 100;
 /**
  * Get port from environment and store in Express.
@@ -37,7 +29,7 @@ app_1.default.app.set('ip', ip);
  */
 // for https
 app_1.default.app.use(enforce.HTTPS({ trustProtoHeader: true }));
-var server = http_1.default.createServer(/* options */ app_1.default.app);
+var server = https_1.default.createServer(options, app_1.default.app);
 /**
  * Listen on provided port, on all network interfaces.
  */
