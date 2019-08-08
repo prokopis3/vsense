@@ -11,12 +11,12 @@ var app_1 = __importDefault(require("./app"));
 var https_1 = __importDefault(require("https"));
 var fs_1 = __importDefault(require("fs"));
 // var debug = require('debug')('technica:server');
-var enforce = require('express-sslify'), key = fs_1.default.readFileSync('server-key.pem'), cert = fs_1.default.readFileSync('server-crt.pem')
+var enforce = require('express-sslify') //, key = fs_1.default.readFileSync('server-key.pem'), cert = fs_1.default.readFileSync('server-crt.pem')
 // , pfx = fs.readFileSync('smartdeep.io.pfx')
-, options = {
+/* , options = {
     key: key,
     cert: cert,
-};
+}; */
 // http.globalAgent.maxSockets = 100;
 /**
  * Get port from environment and store in Express.
