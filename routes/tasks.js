@@ -8,7 +8,8 @@ var global_1 = require("../global");
 // import { mainRouter } from './'
 var auth_1 = require("./auth");
 var net_1 = require("../db/net");
-var mongoose_1 = require("mongoose");
+/* import { Mongoose, mongo } from 'mongoose'; */
+var bson_1 = require("bson");
 var device = require('express-device');
 var gbr = new global_1.GBRoutines();
 /*
@@ -32,10 +33,9 @@ var Tasks = /** @class */ (function () {
             console.log(d.tasks);
             res.send(d);
         });
-        this.router.get('/categories', this.getasks); // Get All Tasks
-        this.router.get('/categories/search', this.searchtasks); // Search All Categories
-        this.router.get('/:id', this.singletask); // Get Single task
-        // this.router.get('/init/:id', auth, this.initializeUnit); // Send Begin SMS to the device
+        this.router.get('/categories', this.getTasks); // Get All Tasks
+        this.router.get('/categories/search', this.SearchTasks); // Search All Categories
+        this.router.get('/:id', this.OneTask); // Get Single task
     };
     /**
      * https Router Posts
@@ -64,30 +64,34 @@ var Tasks = /** @class */ (function () {
      */
     // if the user is authenticated redirect to home
     // ---------- https Functions ToDo ----------
-    Tasks.prototype.getasks = function (req, res, next) {
-        net_1.DB.Models['Category'].find({ recyclebin: false }, function (err, tasks) {
+    Tasks.prototype.getTasks = function (req, res, next) {
+        var dbCollection = net_1.DB.getCollection('category');
+        dbCollection.find({ recyclebin: false }).limit(100).toArray(function (err, categories) {
             if (err)
                 res.status(500).json(err);
-            res.status(200).json(gbr.getNestedChildren(tasks));
-        }).limit(1000);
+            if (global_1.debug.explain)
+                console.log(categories);
+            res.status(200).json(gbr.getNestedChildren(categories));
+        });
     };
-    Tasks.prototype.searchtasks = function (req, res, next) {
+    Tasks.prototype.SearchTasks = function (req, res, next) {
         var sterm = req.query;
         var regex = new RegExp(gbr.escapeRegex(sterm.q), 'gi');
-        net_1.DB.Models['Category']
-            .find({ "name": { $regex: regex }, recyclebin: false }, function (err, searchRes) {
+        var dbCollection = net_1.DB.getCollection('category');
+        dbCollection.find({ "name": { $regex: regex }, recyclebin: false }).limit(10).toArray(function (err, searchRes) {
             // callback
             if (err) {
                 console.error(err);
                 return next(err);
             }
-            // console.log(searchRes)
+            if (global_1.debug.explain)
+                console.log(searchRes);
             res.status(200).json(searchRes);
-        })
-            .sort({ desc: 1 }).limit(10);
+        });
     };
-    Tasks.prototype.singletask = function (req, res, next) {
-        net_1.DB.Models['Category'].findOne({ _id: new mongoose_1.Mongoose().Types.ObjectId(req.params.id), recyclebin: false }, function (err, results) {
+    Tasks.prototype.OneTask = function (req, res, next) {
+        var dbCollection = net_1.DB.getCollection('category');
+        dbCollection.findOne({ _id: new bson_1.ObjectId(req.params.id), recyclebin: false }, function (err, results) {
             if (err) {
                 return next(err);
             }
@@ -96,7 +100,7 @@ var Tasks = /** @class */ (function () {
     };
     Tasks.prototype.savetask = function (req, res, next) {
         var json_obj = req.body, top = json_obj.parent_id.length > 0 ? false : true, newobj = {
-            _id: new mongoose_1.Mongoose().Types.ObjectId().toHexString(),
+            _id: new bson_1.ObjectId().toHexString(),
             name: json_obj.name,
             desc: 1,
             icon: json_obj.icon,
@@ -104,10 +108,8 @@ var Tasks = /** @class */ (function () {
             status: true,
             top: top,
             date_added: new Date()
-        }, 
-        // within some class, this is called..
-        obj = new net_1.DB.Models['Category'](newobj);
-        obj.save(function (err) {
+        }, dbCollection = net_1.DB.getCollection('category');
+        dbCollection.save(newobj, function (err) {
             if (err) {
                 res.status(500).json({ error: err });
             }
@@ -118,7 +120,8 @@ var Tasks = /** @class */ (function () {
         var sterm = req.body, arr = sterm.q ? sterm.q : [];
         if (arr.length > 0) {
             console.log(arr);
-            net_1.DB.Models['Category'].updateMany({ '_id': { '$in': arr } }, { $set: { recyclebin: true } }, function (err) {
+            var dbCollection = net_1.DB.getCollection('Category');
+            dbCollection.updateMany({ '_id': { '$in': arr } }, { $set: { recyclebin: true } }, function (err) {
                 if (err) {
                     res.status(500).json({ error: err });
                 }
@@ -142,7 +145,8 @@ var Tasks = /** @class */ (function () {
         }
         else {
             console.log(req.params.id);
-            net_1.DB.Models['Product'].update({ _id: new mongoose_1.Mongoose().Types.ObjectId(req.params.id) }, updTask, {}, function (err, tasks) {
+            var dbCollection = net_1.DB.getCollection('product');
+            dbCollection.update({ _id: new bson_1.ObjectId(req.params.id) }, updTask, {}, function (err, tasks) {
                 if (err)
                     res.send(err);
                 res.json(tasks);

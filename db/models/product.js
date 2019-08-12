@@ -8,12 +8,12 @@ var Product = /** @class */ (function () {
             _id: { type: mongoose_1.Schema.Types.ObjectId, required: true },
             brandName: { type: String, required: true },
             productName: { type: String, required: true },
-            desc: { type: String, required: true },
+            Desc: { type: String, reqired: true },
             price: { type: Number, required: true },
             stock_id: { type: String, required: true },
-            Rating: { type: Number, required: true },
-            date_added: { type: Date, default: Date.now() },
-            date_modified: { type: Date }
+            rating: { type: Number, required: true },
+            created: { type: Date, default: Date.now() },
+            modified: { type: Date }
         });
         this._model = mongoose_1.model(dbCollectionName, schema, dbCollectionName);
     }

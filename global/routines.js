@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_useragent_1 = __importDefault(require("express-useragent"));
 var util_1 = require("util");
+exports.debug = { explain: false };
 /* import { compareSync, hashSync, genSaltSync } from 'bcrypt' */
 var GBRoutines = /** @class */ (function () {
     function GBRoutines() {
@@ -14,7 +15,7 @@ var GBRoutines = /** @class */ (function () {
             var out = [];
             var str;
             for (var i in arr) {
-                str = arr[i].parent_id ? arr[i].parent_id : undefined;
+                str = arr[i] && arr[i].parent_id ? arr[i].parent_id : undefined;
                 /* console.log( 'parent_id: ' + str  + `  ` + parent) */
                 if (!str && str == parent || str && str.toString() == parent) {
                     var children = _this.getNestedChildren(arr, arr[i]._id);

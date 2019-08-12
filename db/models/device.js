@@ -8,7 +8,7 @@ var Device = /** @class */ (function () {
             _id: { type: mongoose_1.Schema.Types.ObjectId },
             name: { type: String, required: true },
             imei: { type: String, required: true },
-            date_added: { type: Date, default: Date.now() }
+            created: { type: Date, default: Date.now() }
         });
         this._model = mongoose_1.model(dbCollectionName, schema, dbCollectionName);
     }
