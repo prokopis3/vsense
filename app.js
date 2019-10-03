@@ -60,8 +60,8 @@ var Server = /** @class */ (function () {
     Server.prototype.mainServe = function () {
         // View Engine
         console.log(__dirname);
-        this.app.use(express_1.default.static(path_1.default.join(__dirname + '/public')));
-        this.app.use(serve_favicon_1.default(path_1.default.join(__dirname + '/public/favicon.ico')));
+        this.app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+        this.app.use(serve_favicon_1.default(path_1.default.join(__dirname,'public','favicon.ico')));
         // Set Static Folder .well-known production
         // this.app.use(express.static(fpath.join(__dirname, '../','.well-known')))
         this.app.set('views', express_1.default.static(path_1.default.join(__dirname + '/views')));
