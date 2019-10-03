@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-// var serve_favicon_1 = __importDefault(require("serve-favicon"));
+var serve_favicon_1 = __importDefault(require("serve-favicon"));
 var path_1 = __importDefault(require("path"));
 var socket_io_1 = __importDefault(require("socket.io"));
 // GLOBAL FUNCTIONS
@@ -61,7 +61,7 @@ var Server = /** @class */ (function () {
         // View Engine
         console.log(__dirname);
         this.app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
-        // this.app.use(serve_favicon_1.default(path_1.default.join(__dirname,'public','favicon.ico')));
+        this.app.use(serve_favicon_1.default(path_1.default.join(__dirname, 'public', 'favicon.ico')));
         // Set Static Folder .well-known production
         // this.app.use(express.static(fpath.join(__dirname, '../','.well-known')))
         this.app.set('views', express_1.default.static(path_1.default.join(__dirname + '/views')));
