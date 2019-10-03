@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
-var serve_favicon_1 = __importDefault(require("serve-favicon"));
+// var serve_favicon_1 = __importDefault(require("serve-favicon"));
 var path_1 = __importDefault(require("path"));
 var socket_io_1 = __importDefault(require("socket.io"));
 // GLOBAL FUNCTIONS
