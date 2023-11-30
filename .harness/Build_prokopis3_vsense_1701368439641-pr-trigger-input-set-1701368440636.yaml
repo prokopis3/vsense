@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_prokopis3_vsense_1701368439641-pr-trigger-input-set
+  identifier: Build_prokopis3_vsense_1701368439641prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_prokopis3_vsense_1701368439641
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
