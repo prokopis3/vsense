@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_prokopis3_vsense_1701368439641-push-trigger-input-set
+  identifier: Build_prokopis3_vsense_1701368439641pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_prokopis3_vsense_1701368439641
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
